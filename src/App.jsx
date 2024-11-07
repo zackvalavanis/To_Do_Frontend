@@ -5,7 +5,7 @@ import {Footer} from './Footer.jsx';
 import { HomePage } from './HomePage.jsx'
 import { Signup } from './Signup.jsx'
 import { Login } from './Login.jsx'
-import { Logout } from './Logout.jsx'
+import axios from 'axios'
 
 
   const router = createBrowserRouter([
@@ -20,7 +20,17 @@ import { Logout } from './Logout.jsx'
       children: [
         { 
           path: '/',
-          element: <HomePage />
+          element: <HomePage />, 
+          loader: async () => { 
+            try { 
+              const response = await axios.get('http://localhost:3000/activities.json')
+                console.log(response.data);
+                return response.data
+            } catch (error) { 
+              console.error ('error fetching data', error);
+              return { error: 'failed to load data'}
+            }
+          }
         }, 
         { 
           path: '/Signup', 

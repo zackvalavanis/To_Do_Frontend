@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const jwt = localStorage.getItem("jwt")
 if(jwt) { 
@@ -8,6 +9,7 @@ if(jwt) {
 
 export function Login() { 
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
   
 
   const handleSubmit = (event) => { 
@@ -15,11 +17,12 @@ export function Login() {
     setErrors([]);
     const params = new FormData(event.target);
     axios 
-      .post(("http://localhost:3000/sessions.json", params)).then((response) => { 
+      .post("http://localhost:3000/sessions.json", params).then((response) => { 
         console.log(response.data);
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
         event.target.reset();
+        navigate('/');
       })
       .catch((error) => { 
         console.log(error.response);
