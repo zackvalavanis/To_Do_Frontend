@@ -1,9 +1,10 @@
 import { useLoaderData } from 'react-router-dom';
+import React from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
-export function HomePage () { 
-
-  const activities = useLoaderData();
-  
+export function HomePage() { 
   const formatTime = (time) => {
     if (!time || typeof time !== 'string') {
       return "Invalid Time"; 
@@ -17,21 +18,23 @@ export function HomePage () {
     return date.toLocaleTimeString();  
   };
 
-  return ( 
-    <div>
-      {activities.map((activity) => {
-        return (
-          <div key={activity.id}>
-            <h1>{activity.name}</h1>
-            <p>{activity.date}</p>
-              {activity.categories && activity.categories.map((category, index) => ( 
-                <span key={index}>{category.category_type}</span> 
-              ))}
-            <p>{formatTime(activity.time_start)}</p>
-            <p>{formatTime(activity.time_end)}</p>
-          </div>
-        );
-      })}
+  const activities = useLoaderData();
+
+  const events = activities.map((activity) => ({
+    title: activity.name,
+    start: new Date(activity.time_start).toISOString(),
+    end: new Date(activity.time_end).toISOString(),
+  }));
+
+  return (
+    <div className="w-full h-[80vh] mx-auto"> {/* Tailwind classes for full width and height */}
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        events={events}
+        editable={true}
+        selectable={true}
+      />
     </div>
   );
 }
