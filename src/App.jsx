@@ -5,6 +5,7 @@ import {Footer} from './Footer.jsx';
 import { HomePage } from './HomePage.jsx'
 import { Signup } from './Signup.jsx'
 import { Login } from './Login.jsx'
+import { Logout } from './Logout.jsx'
 
 
   const router = createBrowserRouter([
