@@ -3,6 +3,8 @@ import './App.css';
 import {Header} from './Header.jsx';
 import {Footer} from './Footer.jsx';
 import { HomePage } from './HomePage.jsx'
+import { Signup } from './Signup.jsx'
+import { Login } from './Login.jsx'
 
 
   const router = createBrowserRouter([
@@ -18,6 +20,14 @@ import { HomePage } from './HomePage.jsx'
         { 
           path: '/',
           element: <HomePage />
+        }, 
+        { 
+          path: '/Signup', 
+          element: <Signup />
+        }, 
+        { 
+          path: '/Login', 
+          element: <Login />
         }
       ]
     }
