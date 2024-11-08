@@ -9,7 +9,8 @@ import axios from 'axios'
 export function Calendar() {
   const activities = useLoaderData();
   const events = activities.map((activity) => {
-    const { id, name, start_datetime, end_datetime} = activity;
+    const { id, name, date, start_datetime, end_datetime} = activity;
+    console.log('Date:', date)
 
     const startDate = new Date(start_datetime);
     const endDate = new Date(end_datetime);
@@ -23,6 +24,7 @@ export function Calendar() {
 
     return {
       id: id,
+      date: date, 
       title: name || 'Untitled Event',
       start: startLocal,  
       end: endLocal,
@@ -33,31 +35,40 @@ export function Calendar() {
 
   const handleSelect = (selectInfo) => { 
     const title = prompt('Enter event title', 'New Event');
-    if(title){ 
-      const newEvent = { 
-        id: id,
-        title: title, 
+    if (title) {
+      // If this is a new event, we need to generate the id dynamically
+      const newId = Date.now(); // Or generate an id in another way
+      const newEvent = {
+        id: newId,
+        date: selectInfo.startStr.split('T')[0], // Extract the date part from the start time
+        title: title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
       };
       setEvents([...events, newEvent]); // Add the new event to the state
     }
     selectInfo.view.calendar.unselect(); // Deselect the area
-  };
+};
 
-    // Handler for clicking on an event
-    const handleEventClick = (clickInfo) => {
-      console.log('Event ID:', clickInfo.event.id);
-      const newTitle = prompt('Enter new title for the event:', clickInfo.event.title);
-      if (newTitle) {
-        clickInfo.event.setProp('title', newTitle); 
 
-        const updatedEvent = { name: newTitle }
-        axios.patch(`http://localhost:3000/activities/${clickInfo.event.id}.json`, updatedEvent ).then((response) => { 
-          console.log( 'updatedEvent', response.data)
-        })
-      }
-    };
+const handleEventClick = (clickInfo) => {
+  console.log('Event ID:', clickInfo.event.id); // This should give you the event ID correctly
+  console.log('Event Date:', clickInfo.event.startStr.split('T')[0]); // Extracts date part
+  console.log(clickInfo.event)
+
+  const newTitle = prompt('Enter new title for the event:', clickInfo.event.title);
+  if (newTitle) {
+    clickInfo.event.setProp('title', newTitle); // Update the event title
+
+    const updatedEvent = { name: newTitle };
+    axios.patch(`http://localhost:3000/activities/${clickInfo.event.id}.json`, updatedEvent)
+      .then((response) => { 
+        console.log('Updated Event:', response.data);
+      });
+  }
+};
+
+  
 
   return (
       <div className="w-full h-[80vh] mx-auto">
