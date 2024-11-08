@@ -1,3 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Add this to your global CSS or in your App component */
+body {
+  background: linear-gradient(to right, #eeeeee, #cdcdcd);
+  /* Purple to Blue Gradient */
+  color: white;
+  /* Set text color to white for contrast */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  height: 100vh;
+}

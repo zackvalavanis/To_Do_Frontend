@@ -1,0 +1,43 @@
+/* Ensure dropdown items have consistent styling */
+.dropdown-menu {
+  background-color: #ffffff;
+  /* White background for the dropdown */
+  border: 1px solid #ddd;
+  /* Light border */
+  border-radius: 0.25rem;
+  /* Rounded corners */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  /* Add some shadow */
+}
+
+/* Customize the look of each dropdown item */
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  /* Add padding for comfortable clicks */
+  color: #212529;
+  /* Default text color */
+  text-decoration: none;
+  /* Remove underline from links */
+  background-color: transparent;
+  /* Transparent background */
+}
+
+/* Hover effect to make dropdown items more interactive */
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  /* Light gray background on hover */
+  color: #007bff;
+  /* Change text color on hover */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+}
+
+/* Optionally style the disabled link */
+.dropdown-item.disabled {
+  color: #6c757d;
+  /* Greyed-out color */
+  pointer-events: none;
+  /* Prevent interaction */
+  background-color: transparent;
+  /* Transparent background */
+}

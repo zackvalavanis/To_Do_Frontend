@@ -1,11 +1,13 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import './App.css';
-import {Header} from './Header.jsx';
+import {Header} from './Header.jsx';  
 import {Footer} from './Footer.jsx';
-import { HomePage } from './HomePage.jsx'
+import { Calendar } from './Calendar.jsx'
 import { Signup } from './Signup.jsx'
 import { Login } from './Login.jsx'
 import axios from 'axios'
+import { HomePage } from './HomePage.jsx'
+import { UserProvider } from './CreateContext';
 
 
   const router = createBrowserRouter([
@@ -19,8 +21,8 @@ import axios from 'axios'
       ), 
       children: [
         { 
-          path: '/',
-          element: <HomePage />, 
+          path: '/Calendar',
+          element: <Calendar />, 
           loader: async () => { 
             try { 
               const response = await axios.get('http://localhost:3000/activities.json')
@@ -39,6 +41,10 @@ import axios from 'axios'
         { 
           path: '/Login', 
           element: <Login />
+        }, 
+        { 
+          path: '/', 
+          element: <HomePage />
         }
       ]
     }
@@ -46,9 +52,11 @@ import axios from 'axios'
 
 function App() {
   return (
+    <UserProvider>
     <div>
       <RouterProvider router={router} />
     </div>
+    </UserProvider>
 
   )
 }
