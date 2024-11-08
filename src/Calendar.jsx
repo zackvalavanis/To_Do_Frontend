@@ -66,6 +66,15 @@ export function Calendar() {
     }
   };
 
+  
+
+
+
+
+
+
+
+
   return (
     <div className="w-full h-[80vh] mx-auto">
       <FullCalendar
