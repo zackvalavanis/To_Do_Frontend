@@ -1,9 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Logout } from './Logout.jsx'
-
+import { useEffect } from 'react'
+import { AuthContext } from './AuthContext';
+import React, { useContext } from 'react';
 
 export function Header() {
+  const { currentUser, isLoggedIn, logout} = useContext(AuthContext);
+
+ 
+  useEffect(() => { 
+   if (!localStorage.jwt){ 
+    console.log('user Logged out')
+   }
+  }, []);
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -25,7 +36,9 @@ export function Header() {
                 <a className="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/Calendar">Calendar</a>
+                {localStorage.jwt ? (
+                  <a className="nav-link" href="/Calendar">Calendar</a>) : (null)
+                }
               </li>
               <li className="nav-item dropdown">
                 <a 

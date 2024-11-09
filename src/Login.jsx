@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from './AuthContext.jsx'
+import React, { useContext } from 'react';
 
 const jwt = localStorage.getItem("jwt")
 if(jwt) { 
@@ -10,24 +12,30 @@ if(jwt) {
 export function Login() { 
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const { setCurrentUser, setIsLoggedIn } = useContext(AuthContext);
+
   
 
-  const handleSubmit = (event) => { 
+  const handleSubmit = async (event) => { 
     event.preventDefault();
     setErrors([]);
     const params = new FormData(event.target);
-    axios 
-      .post("http://localhost:3000/sessions.json", params).then((response) => { 
-        console.log(response.data);
-        axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
-        localStorage.setItem("jwt", response.data.jwt);
-        event.target.reset();
-        navigate('/');
-      })
-      .catch((error) => { 
-        console.log(error.response);
-        setErrors(["invalid Email or Password"]);
-      });
+    try {
+      const response = await axios.post("http://localhost:3000/sessions.json", params);
+      const { jwt } = response.data;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      localStorage.setItem("jwt", jwt);
+      event.target.reset();
+
+      // Fetch current user data
+      const userResponse = await axios.get("http://localhost:3000/users/current.json");
+      setCurrentUser(userResponse.data);
+      setIsLoggedIn(true);
+      navigate('/');
+    } catch (error) {
+      console.log(error.response);
+      setErrors([error.response.data.error || 'Invalid email or password']);
+    }
   };
 
   return (

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+
 export function HomePage () {
   const [name, setName] = useState("")
   const navigate = useNavigate();
+
   
   
   const handleClick = (event) => { 
@@ -11,11 +13,6 @@ export function HomePage () {
     setName('johnny')
     console.log(name)
   }
-
-
-
-
-
 
   return ( 
     <div>

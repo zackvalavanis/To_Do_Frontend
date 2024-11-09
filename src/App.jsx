@@ -7,7 +7,7 @@ import { Signup } from './Signup.jsx'
 import { Login } from './Login.jsx'
 import axios from 'axios'
 import { HomePage } from './HomePage.jsx'
-import { UserProvider } from './CreateContext';
+import { AuthProvider } from './AuthContext.jsx';
 
 
   const router = createBrowserRouter([
@@ -52,13 +52,12 @@ import { UserProvider } from './CreateContext';
 
 function App() {
   return (
-    <UserProvider>
+    <AuthProvider>
     <div>
       <RouterProvider router={router} />
     </div>
-    </UserProvider>
-
-  )
+    </AuthProvider>
+  );
 }
 
 export default App
