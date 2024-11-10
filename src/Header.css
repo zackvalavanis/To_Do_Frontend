@@ -1,7 +1,6 @@
 /* Ensure dropdown items have consistent styling */
 .header .dropdown-menu {
-  background: linear-gradient(to right, #f8f8f8, #699268);
-  border: 1px solid #3884ff;
+  background: white border: 1px solid #3884ff;
   border-radius: 0.25rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
@@ -16,8 +15,8 @@
 
 /* Hover effect to make dropdown items more interactive */
 .header .dropdown-item:hover {
-  background: linear-gradient(to right, #02e40d, #eb589a);
-  color: #007bff;
+  background: #699268;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -31,4 +30,6 @@
 /* Target navbar for the gradient background */
 .header .navbar.navbar-expand-lg.bg-body-tertiary {
   background: linear-gradient(to right, #f8f8f8, #699268);
+  height: 10em;
+  text-align: right;
 }

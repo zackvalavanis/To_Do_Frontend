@@ -18,7 +18,7 @@ export function HomePage () {
 
   return ( 
     <div>
-      <Banner />
+      {/* <Banner /> */}
       <AppSlider />
       {/* <button onClick={handleClick}>Click Me</button> */}
     </div>
