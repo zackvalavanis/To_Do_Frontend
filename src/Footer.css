@@ -1,5 +1,14 @@
-.footer {
-  margin-top: 40em;
+/* Styling for the footer container */
+.footer-container {
   text-align: center;
-  font-size: 10px;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+  margin-top: 5em
+}
+
+/* Styling for the heading inside the footer */
+.footer-heading {
+  font-size: 1.5rem;
+  margin: 0;
 }

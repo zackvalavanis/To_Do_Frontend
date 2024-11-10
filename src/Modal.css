@@ -12,19 +12,49 @@
 .modal-main {
   position: fixed;
   background: white;
-  width: 80%;
+  width: 30%;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1em;
+  align-items: center;
 }
 
 .modal-main button.close {
-  font-size: 2em;
+  font-size: 1em;
+  /* Font size */
+  color: red;
+  /* Text color (red for visibility) */
   background: none;
-  border: none;
+  border: 1px;
   position: absolute;
-  top: 0em;
-  right: 0.2em;
+  top: 28em;
+  /* Top position, slightly moved down for better alignment */
+  right: 2.5em;
+  /* Right position, gives space from the edge */
+  padding: 0.5em;
+  /* Adds padding for a better clickable area */
+  border-radius: 20%;
+  /* Circular button */
+  display: flex;
+  /* Ensures the button is centered */
+  justify-content: center;
+  /* Centers the content */
+  align-items: center;
+  /* Vertically center-aligns the button text */
+  cursor: pointer;
+  /* Changes cursor to pointer on hover */
+  transition: all 0.3s ease;
+  /* Smooth transition for hover effects */
+}
+
+/* Optional Hover/Focus States for Interactivity */
+.modal-main button.close:hover,
+.modal-main button.close:focus {
+  color: white;
+  /* Changes text color to white when hovered/focused */
+  background-color: red;
+  /* Red background on hover/focus */
+  border-color: blue;
+  /* Adds a blue border for visibility */
 }

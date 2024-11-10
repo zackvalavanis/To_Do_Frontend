@@ -1,35 +1,18 @@
-/* Ensure dropdown items have consistent styling */
-.header .dropdown-menu {
-  background: white border: 1px solid #3884ff;
-  border-radius: 0.25rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+.navbar-brand {
+  position: center;
+  height: 40px;
+  width: 40px;
+  margin-right: 8px;
 }
 
-/* Customize the look of each dropdown item */
-.header .dropdown-item {
-  padding: 0.5rem 1rem;
-  color: #212529;
-  text-decoration: none;
-  background-color: transparent;
+.navbar-brand {
+  background-color: #fff;
+  /* Add a white background or any color */
+  padding: 5px;
+  /* Optional: Add some padding to make the logo look better */
 }
 
-/* Hover effect to make dropdown items more interactive */
-.header .dropdown-item:hover {
-  background: #699268;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-/* Optionally style the disabled link */
-.header .dropdown-item.disabled {
-  color: #6c757d;
-  pointer-events: none;
-  background-color: transparent;
-}
-
-/* Target navbar for the gradient background */
-.header .navbar.navbar-expand-lg.bg-body-tertiary {
-  background: linear-gradient(to right, #f8f8f8, #699268);
-  height: 10em;
-  text-align: right;
+.navbar {
+  background-color: #333;
+  /* Dark background color for contrast */
 }

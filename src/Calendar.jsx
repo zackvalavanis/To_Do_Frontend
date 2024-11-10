@@ -6,102 +6,94 @@ import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 import { Modal } from './Modal.jsx';
 import './Calendar.css';
-import { ActivityShow } from './ActivityShow.jsx'
+import { ActivityShow } from './ActivityShow.jsx';
 
 export function Calendar() {
   const activities = useLoaderData() || [];
   const [events, setEvents] = useState([]);
-  const [ stuff, setStuff] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [ currentActivity, setCurrentActivity] = useState({});
-  const [selectedEventId, setSelectedEventId] = useState(null); // Store selected event ID
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentActivity, setCurrentActivity] = useState({});
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
+  // Fetch and format activities once on mount
   useEffect(() => {
     const formattedEvents = activities.map((activity) => {
-      const { id, title, start, end, description, finished } = activity;
-
-      // Ensure that start and end are in the correct ISO 8601 format (with timezone info)
-      const startLocal = new Date(start).toISOString();
-      const endLocal = new Date(end).toISOString();
-
+      const { id, name, start_datetime, end_datetime, description, finished } = activity;
+      console.log('Start:', start_datetime, 'End:', end_datetime); // Log to check values
+  
+      const startLocal = new Date(start_datetime).toISOString();
+      const endLocal = new Date(end_datetime).toISOString();
+  
       if (isNaN(new Date(startLocal).getTime()) || isNaN(new Date(endLocal).getTime())) {
-        console.error('Invalid date:', start, end);
-        return null;  // Skip if dates are invalid
+        console.error('Invalid date:', start_datetime, end_datetime);
+        return null;
       }
-
+  
       return { 
         id, 
-        title, 
+        title: name, 
         start: startLocal, 
         end: endLocal, 
         description, 
         finished, 
-        display: 'block'  // This makes the event visible
+        display: 'block' 
       };
-    }).filter(event => event !== null);  // Remove invalid events
+    }).filter(event => event !== null); // Only include valid events
+  
+    setEvents(formattedEvents); // Update the state with the formatted events
+  }, [activities]);
+  
 
-    setEvents(formattedEvents);
-  }, [activities]);  // Re-run whenever activities data changes
-
-
-  const handleIndex = () => { 
-    // console.log(handleIndex);
-    axios.get("http://localhost:3000/activities.json").then((response) => { 
-      console.log(response.data);
-      setStuff([...stuff, response.data])
-    })
-  }
-
+  // Handle event click (to show activity details)
   const handleEventClick = (clickInfo) => {
     const event = clickInfo.event;
-    // console.log('Event ID', event.id);
-    if (event.id) {
-      setSelectedEventId(event.id);  
-    }
-    // Get event data
+    setSelectedEventId(event.id);
+
     const clickedEvent = {
-      title: clickInfo.event.title,
-      description: clickInfo.event.extendedProps.description,
-      start: clickInfo.event.start.toISOString(),
-      end: clickInfo.event.end ? clickInfo.event.end.toISOString() : '',
-      finished: clickInfo.event.extendedProps.finished,
+      title: event.title,
+      description: event.extendedProps.description,
+      start: event.start.toISOString(),
+      end: event.end ? event.end.toISOString() : '',
+      finished: event.extendedProps.finished,
     };
-  
-    // Set the modal visibility to true and pass the event data to the modal
-    setIsModalVisible(true);
-    setCurrentActivity(clickedEvent);
+    setCurrentActivity(clickedEvent); // Store event details in currentActivity
+    setIsModalVisible(true); // Show modal
   };
+
+  // Handle date selection (no activity selected)
+  const handleShow = (info) => {
+    const selectedDate = info.start; // This is already a Date object in the local time zone
+    setSelectedDate(selectedDate); // Set it as a Date object
   
-
-  const handleShow = (activity) => { 
-    // console.log('handleShow', activity);
-    setIsModalVisible(true);
-    setCurrentActivity(activity)
-  }
-
-  const handleClose = () => { 
-    // console.log(handleClose);
-    setIsModalVisible(false)
+    // Clear current activity (since no event is selected)
+    setCurrentActivity({});
     setSelectedEventId(null);
-  }
+  
+    setIsModalVisible(true); // Show modal with selected date
+  };
 
-  useEffect(handleIndex, []);
+  // Close the modal
+  const handleClose = () => { 
+    setIsModalVisible(false);
+    setSelectedEventId(null);
+  };
 
   return (
-        <div className="w-full h-[80vh] mx-auto">
+    <div className="w-full h-[80vh] mx-auto">
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        events={events}  // Pass formatted events here
+        events={events}
         editable={true}
         selectable={true}
-        select={handleShow}
+        select={handleShow} // Pass the select handler for date selection
         timeZone="local"
         eventClick={handleEventClick}
       />
-        <Modal show={isModalVisible} onClose={handleClose}>   
-        <ActivityShow eventId={selectedEventId}/>
-        </Modal>
+      <Modal show={isModalVisible} onClose={handleClose}>   
+        <ActivityShow eventId={selectedEventId} selectedDate={selectedDate} />
+      </Modal>
     </div>
-);
+  );
 }

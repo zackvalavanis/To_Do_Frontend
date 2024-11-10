@@ -1,43 +1,118 @@
+/* Full-page slider container */
 .full-page-slider {
   width: 100vw;
   /* Full width of the viewport */
-  height: 60vh;
-  /* Full height of the viewport */
+  height: 100vh;
+  /* Full height of the viewport for a full-screen effect */
   overflow: hidden;
-  /* Hide any overflow */
+  /* Hide any overflowing content */
+  display: flex;
+  /* Use flexbox for positioning the slides */
+  justify-content: center;
+  /* Center content horizontally */
+  align-items: center;
+  /* Center content vertically */
+  background-color: #f4f4f4;
+  /* Light background for the entire slider */
 }
 
+/* Individual slide within the slider */
 .slider-item {
   display: flex;
+  /* Use flexbox for layout */
   justify-content: center;
+  /* Center content horizontally */
   align-items: center;
+  /* Center content vertically */
   flex-direction: column;
-  height: 60vh;
-  /* Each slide should fill the screen */
-  background-color: #f4f4f4;
-  /* Light background for each page */
+  /* Stack content vertically */
+  height: 100%;
+  /* Each slide takes up the entire container height */
+  background-color: #ffffff;
+  /* White background for each slide */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+  border-radius: 10px;
+  /* Rounded corners for each slide */
+  padding: 100px;
+  /* Add padding for spacing inside the slides */
   text-align: center;
-  padding: 20px;
+  /* Center-align text */
+  transition: transform 0.3s ease;
+  /* Smooth transition on hover */
 }
 
+/* Style for the slide heading */
 .slider-item h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
+  /* Larger font size for a bold header */
+  font-weight: 700;
+  /* Bold font weight for prominence */
+  color: #333;
+  /* Dark text color for readability */
   margin-bottom: 20px;
+  /* Space below the heading */
 }
 
+/* Style for the paragraph inside the slide */
 .slider-item p {
   font-size: 1.5rem;
+  /* Medium font size for text */
+  color: #555;
+  /* Slightly lighter text color */
   margin-bottom: 30px;
+  /* Space below the paragraph */
+  line-height: 1.6;
+  /* Improved line spacing for readability */
 }
 
+/* Style for the link/button inside the slide */
 .slider-item a {
-  padding: 10px 20px;
+  padding: 15px 30px;
+  /* Increased padding for a larger button */
   background-color: #007bff;
-  color: rgb(0, 0, 0);
+  /* Blue background for the button */
+  color: #ffffff;
+  /* White text color */
+  font-size: 1.2rem;
+  /* Slightly larger text for the button */
   text-decoration: none;
-  border-radius: 5px;
+  /* Remove underline from link */
+  border-radius: 50px;
+  /* Rounded corners for a pill-shaped button */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  /* Smooth transitions */
 }
 
+/* Hover effect for the link/button */
 .slider-item a:hover {
   background-color: #0056b3;
+  /* Darker blue background on hover */
+  transform: scale(1.05);
+  /* Slight scale effect for interactivity */
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .slider-item {
+    padding: 15px;
+    /* Reduced padding on smaller screens */
+  }
+
+  .slider-item h1 {
+    font-size: 2.5rem;
+    /* Smaller heading on smaller screens */
+  }
+
+  .slider-item p {
+    font-size: 1.2rem;
+    /* Slightly smaller paragraph text */
+  }
+
+  .slider-item a {
+    padding: 12px 25px;
+    /* Smaller button size on mobile */
+    font-size: 1rem;
+    /* Adjust button text size */
+  }
 }

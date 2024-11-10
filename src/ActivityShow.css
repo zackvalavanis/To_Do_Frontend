@@ -1,0 +1,122 @@
+.activity-show-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  margin: 20px;
+}
+
+h1.activity-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.activity-time {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.activity-form .form-group {
+  margin-bottom: 15px;
+}
+
+.activity-form label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.activity-form input[type="text"],
+.activity-form select,
+.activity-form input[type="radio"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.activity-form input[type="radio"] {
+  width: auto;
+  margin-right: 5px;
+}
+
+.activity-form .form-group select {
+  width: 100%;
+}
+
+.activity-form .form-group label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.activity-form input[type="text"] {
+  width: calc(100% - 20px);
+}
+
+.activity-form button {
+  width: 50%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.activity-form button:hover {
+  background-color: #45a049;
+}
+
+.activity-not-found {
+  font-size: 18px;
+  color: #f44336;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.activity-form .form-group input[type="radio"] {
+  margin-right: 10px;
+}
+
+.activity-form .form-group {
+  margin-bottom: 20px;
+}
+
+.btn-submit {
+  padding: 12px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-submit:hover {
+  background-color: #1976D2;
+}
+
+.activity-form input[type="text"],
+.activity-form select {
+  font-size: 16px;
+  color: #333;
+}
+
+.activity-form input[type="radio"] {
+  width: auto;
+}
+
+.activity-form button {
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}

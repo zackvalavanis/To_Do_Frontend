@@ -1,12 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './ActivityShow.css';
 import { useAuth } from './AuthContext';  // Make sure this import is correct
 
-
-export function ActivityShow({ eventId }) {
+export function ActivityShow({ eventId, selectedDate }) {
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth(); 
+  const [ activities, setActivities ] = useState([]);
+  const [ finished, setFinished ] = useState(false);
+
+  const generateTimeSlots = () => {
+    const slots = [];
+    const startTime = 12; // Start from 00:00
+    const endTime = 12; // End at 23:59
+    const interval = 15; // Interval in minutes
+
+    for (let h = 0; h < 24; h++) { // Loop over 24 hours
+      for (let m = 0; m < 60; m += interval) { // Loop in 15-minute intervals
+        const hour = h % 12 === 0 ? 12 : h % 12; // Convert 24-hour format to 12-hour format
+        const minute = m < 10 ? `0${m}` : m; // Ensure minutes are two digits
+        const ampm = h < 12 ? 'AM' : 'PM'; // AM/PM notation
+  
+        const time = `${hour}:${minute} ${ampm}`;
+        slots.push(time);
+      }
+    }
+  
+    return slots;
+  };
+
+  const timeSlots = generateTimeSlots();
 
   useEffect(() => {
     if (eventId) {
@@ -24,67 +48,161 @@ export function ActivityShow({ eventId }) {
       fetchActivity();
     }
   }, [eventId]);
+
+  const formattedDate = selectedDate ? new Date(selectedDate).toISOString().split('T')[0] : ''; 
+  
+
+  const handleCreate = (params, successCallback) => { 
+    console.log('handleCreate', params);
+    axios.post("http://localhost:3000/activities.json", params).then((response) => { 
+              console.log(response.data);
+              setActivities([...activities, response.data]);
+              successCallback();
+            })
+          }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const params = new FormData(event.target);
+    const finished = params.get('finished' === 'true')
+    const processedParams = {
+      ...Object.fromEntries(params.entries()), // Convert FormData to a plain object
+      finished: finished,
+    };
+  
+    handleCreate(processedParams, () => event.target.reset());
+  };
+
   if (!activity) {
     return (
-      <div>
-        <p>Activity not found, add activity below!</p>
-        <form>
-          <div>
-          UserID: <input defaultValue={currentUser.id} name='User_id' type='text' />
+      <div className="activity-show-container">
+        <p className="activity-not-found">Activity not found, add activity below!</p>
+        <form onSubmit={handleSubmit} className="activity-form">
+          <div className="form-group">
+            <input defaultValue={currentUser.id} name='user_id' type='hidden' />
           </div>
-          <div>
-          Title: <input name='title' type='text' /> 
+          <div className="form-group">
+            <label htmlFor="title">Activity: </label>
+            <input id="title" name='name' type='text' /> 
           </div>
-          <div>
-          start: <input name='start_datetime' type='text' />
+          <div className="form-group">
+            <input 
+              name='date' 
+              type='text' 
+              defaultValue={formattedDate} 
+            />
           </div>
-          <div>
-            End: <input name='end_datetime' type='text'/>
+          <div className="form-group">
+            <label htmlFor="start_datetime">Start: </label>
+            <select name="start_datetime" id="start_datetime">
+              <option value="">Select Start Time</option>
+              {timeSlots.map((time, index) => (
+                <option key={index} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
           </div>
-          <div>
-          Completed:
+          <div className="form-group">
+            <label htmlFor="end_datetime">End: </label>
+            <select name="end_datetime" id="end_datetime">
+              <option value="">Select End Time</option>
+              {timeSlots.map((time, index) => (
+                <option key={index} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Completed: </label>
+            <label>
+              <input 
+                name="finished" 
+                type="radio" 
+                value="true" 
+                checked={finished === true}
+                onChange={() => setFinished(true)}
+              /> Yes
+            </label>
+            <label>
+              <input 
+                name="finished" 
+                type="radio" 
+                value="false" 
+                checked={finished === true} 
+                onChange={() => setFinished(false)}
+              /> No
+            </label>
+          </div>
+          <button type="submit" className="btn-submit">New Activity</button> 
+        </form>
+      </div>
+    );
+  }
+
+  return (
+    <div className="activity-show-container">
+      <h1 className="activity-title">{activity.name}</h1>
+      <p className="activity-time">Start: {new Date(activity.start_datetime).toLocaleString()}</p>
+      <p className="activity-time">End: {new Date(activity.end_datetime).toLocaleString()}</p>
+      <form onSubmit={handleSubmit} className="activity-form">
+        <div className="form-group">
+          <input defaultValue={currentUser.id} name='User_id' type='hidden' />
+        </div>
+        <div className="form-group">
+          <label htmlFor="title">Activity: </label>
+          <input id="title" defaultValue={activity.name} name='title' type='text' /> 
+        </div>
+        <div className="form-group">
+          <input 
+            name='date' 
+            type='hidden' 
+            defaultValue={formattedDate} 
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="start_datetime">Start: </label>
+          <select name="start_datetime" id="start_datetime">
+            <option value="">Select Start Time</option>
+            {timeSlots.map((time, index) => (
+              <option key={index} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="end_datetime">End: </label>
+          <select name="end_datetime" id="end_datetime">
+            <option value="">Select End Time</option>
+            {timeSlots.map((time, index) => (
+              <option key={index} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label>Completed: </label>
           <label>
             <input 
               name="finished" 
               type="radio" 
-              value="yes" 
+              value="true" 
             /> Yes
           </label>
           <label>
             <input 
               name="finished" 
               type="radio" 
-              value="no" 
-              defaultChecked={true} 
+              value="false" 
+              checked={true} 
             /> No
           </label>
-          </div>
-        </form>
-          <button>New Activity</button> 
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <h1>{activity.name}</h1>
-      Start: <p>{new Date(activity.start_datetime).toLocaleString()}</p>
-      End: <p>{new Date(activity.end_datetime).toLocaleString()}</p>
-      <button>Update Activity</button>
+        </div>
+        <button type="submit" className="btn-submit">Update Activity</button>
+      </form>
     </div>
-
   );
 }
-
-
-// create_table "activities", force: :cascade do |t|
-// t.integer "user_id"
-// t.datetime "date", null: false
-// t.boolean "finished", default: false
-// t.datetime "created_at", null: false
-// t.datetime "updated_at", null: false
-// t.string "name"
-// t.datetime "start_datetime", null: false
-// t.datetime "end_datetime", null: false
-// t.string "time_zone", default: "UTC"
-// end

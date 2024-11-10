@@ -1,13 +1,36 @@
-/* Add this to your global CSS or in your App component
+/* Apply to the body and html to ensure the page uses full height */
+html,
 body {
-  background: linear-gradient(to right, #f8f8f8, #699268);
-  /* Purple to Blue Gradient */
-color: white;
-/* Set text color to white for contrast */
-font-family: 'Arial',
-sans-serif;
-margin: 0;
-height: 100vh;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-*/
+/* Flexbox layout for the entire app container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Make sure the container takes up the entire height of the viewport */
+}
+
+/* This will take up all the available space, pushing the footer to the bottom */
+.content-area {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Footer styling */
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  /* Adds spacing above footer */
+}
+
+.footer h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
