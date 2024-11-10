@@ -1,0 +1,48 @@
+/* Ensure full height of the calendar */
+.w-full {
+  width: 100%;
+}
+
+.h-[80vh] {
+  height: 80vh;
+}
+
+/* FullCalendar grid styles */
+.fc {
+  font-family: 'Arial', sans-serif;
+}
+
+.fc .fc-daygrid-event {
+  cursor: pointer;
+}
+
+.fc-toolbar {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.fc-daygrid-day {
+  border: 1px solid #f0f0f0;
+}
+
+.fc-daygrid-day-number {
+  color: #000;
+}
+
+.fc-daygrid-day-top {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Highlight today's date */
+.fc-daygrid-day-today {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+
+/* Selected day styling */
+.fc-daygrid-selected {
+  background-color: #007bff;
+  color: white;
+}

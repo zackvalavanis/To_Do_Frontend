@@ -8,6 +8,7 @@ import { Login } from './Login.jsx'
 import axios from 'axios'
 import { HomePage } from './HomePage.jsx'
 import { AuthProvider } from './AuthContext.jsx';
+import {ActivityShow} from './ActivityShow.jsx'
 
 
   const router = createBrowserRouter([
@@ -45,6 +46,14 @@ import { AuthProvider } from './AuthContext.jsx';
         { 
           path: '/', 
           element: <HomePage />
+        }, 
+        { 
+          path: '/Activities/:id', 
+          element: <ActivityShow />, 
+          loader: () => axios.get(`http://localhost:3000/photos/${params.id}.json`).then((response) => { 
+            console.log(response.data);
+            return response.data
+          })
         }
       ]
     }

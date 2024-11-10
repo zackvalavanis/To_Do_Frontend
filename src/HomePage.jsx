@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Banner } from './Banner.jsx'
+// import { Banner } from './Banner.jsx'
 import  AppSlider  from './Slider.jsx'
 
 
