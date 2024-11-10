@@ -1,0 +1,11 @@
+.banner {
+  background-image: url('https://png.pngtree.com/thumb_back/fh260/back_our/20190617/ourmid/pngtree-ancient-poet-poetry-lyrics-large-size-background-image_123870.jpg');
+  height: 55vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}

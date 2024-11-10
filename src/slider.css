@@ -1,0 +1,43 @@
+.full-page-slider {
+  width: 100vw;
+  /* Full width of the viewport */
+  height: 20vh;
+  /* Full height of the viewport */
+  overflow: hidden;
+  /* Hide any overflow */
+}
+
+.slider-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 30vh;
+  /* Each slide should fill the screen */
+  background-color: #f4f4f4;
+  /* Light background for each page */
+  text-align: center;
+  padding: 20px;
+}
+
+.slider-item h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.slider-item p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.slider-item a {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.slider-item a:hover {
+  background-color: #0056b3;
+}

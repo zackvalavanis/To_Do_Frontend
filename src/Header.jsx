@@ -4,6 +4,7 @@ import { Logout } from './Logout.jsx'
 import { useEffect } from 'react'
 import { AuthContext } from './AuthContext';
 import React, { useContext } from 'react';
+import './Header.css';
 
 export function Header() {
   const { currentUser, isLoggedIn, logout} = useContext(AuthContext);
@@ -16,7 +17,7 @@ export function Header() {
   }, []);
 
   return (
-    <div>
+    <div className='header'>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <button 
@@ -52,9 +53,9 @@ export function Header() {
                 </a>
                 <ul className="dropdown-menu">
                 <li><a className="dropdown-item" href="/">Home</a></li>
-                <li><a className="dropdown-item" href="/Login">Login</a></li>
-                <li><a className="dropdown-item" href="/Signup">Signup</a></li>
-                <li><Logout className="dropdown-item" /></li>
+                {!localStorage.jwt ? (<li><a className="dropdown-item" href="/Login">Login</a></li>) : (null)}
+                {!localStorage.jwt ? (<li><a className="dropdown-item" href="/Signup">Signup</a></li>) : (null)}
+                {localStorage.jwt ? (<li><Logout className="dropdown-item" /></li>) : (null)}
               </ul>
               </li>
             </ul>

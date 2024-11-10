@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Banner } from './Banner.jsx'
+import  AppSlider  from './Slider.jsx'
 
 
 export function HomePage () {
@@ -16,10 +18,9 @@ export function HomePage () {
 
   return ( 
     <div>
-      <h1>
-        Welcome to your page!
-      </h1>
-      <button onClick={handleClick}>Click Me</button>
+      <Banner />
+      <AppSlider />
+      {/* <button onClick={handleClick}>Click Me</button> */}
     </div>
   )
 }
