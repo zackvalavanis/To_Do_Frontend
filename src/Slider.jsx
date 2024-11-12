@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';  // To navigate between apps
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './slider.css'
+import { useEffect } from 'react'
 
 const AppSlider = () => {
   const settings = {
     dots: true,  // Show navigation dots
-    infinite: true,  // Infinite scrolling
+    infinite: false,  // Infinite scrolling
     speed: 500,  // Transition speed
     slidesToShow: 1,  // Show one slide at a time
     slidesToScroll: 1,  // Scroll one slide at a time
@@ -17,16 +18,21 @@ const AppSlider = () => {
     autoplaySpeed: 3000,
   };
 
+  const isLoggedin = localStorage.jwt
 
-  // const cards = [
-  //   {id: 1, imageUrl:  }, 
-  //   {id: 2, imageUrl: }, 
-  //   {id: 3, imageUrl: }
-  // ]
+  useEffect(() => { 
+    if (!isLoggedin){ 
+      console.log('user Logged out');
+    }
+  }, [isLoggedin]);
+
+
+
 
   return (
     <div className="app-slider-container">
       <Slider {...settings}>
+      {localStorage.jwt &&
         <div className="slider-item">
         <Link to="/Calendar">
           <div className ='card-1'>
@@ -37,8 +43,9 @@ const AppSlider = () => {
           <h3>Calendar</h3>
           <p>Your Calendar Awaits</p>
           </div>
-        </div>
+        </div>}
 
+      {!localStorage.jwt &&
        <div className="slider-item">
        <Link to="/Login">
         <div className="card-1">
@@ -49,8 +56,9 @@ const AppSlider = () => {
           <h3>Sign In Here</h3>
           <p>Welcome Back</p>
         </div>
-        </div>
+        </div>}
 
+        {!localStorage.jwt &&
         <div className="slider-item">
         <Link to="/Signup">
           <div className='card-1'>
@@ -61,7 +69,7 @@ const AppSlider = () => {
           <h3>Signup</h3>
           <p>Join the community and always be on time</p>
         </div>
-       </div>
+       </div>}
       </Slider>
     </div>
   );
