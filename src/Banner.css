@@ -1,11 +1,75 @@
-/* .banner {
-  background-image: url('https://wallpapers.com/images/hd/snowing-background-e8cino6nt51k6y0x.jpg');
+/* Reset margin and padding for html and body */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+/* Full-width banner with no extra margin or padding */
+.banner {
+  position: relative;
+  /* Make it a positioned container for absolute elements */
+  background-image: url('https://wallpapers.com/images/hd/wide-3440-x-1440-background-58v8ac083ss8wxwy.jpg');
   height: 55vh;
+  width: 100vw;
+  /* Full viewport width */
   background-size: cover;
   background-position: center;
-  position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-} */
+/* Black box on the left side */
+.banner .black-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  /* Adjust the width of the box */
+  height: 85%;
+  /* Make it take the full height of the banner */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  /* Ensures padding doesn’t affect the width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-info {
+  color: white;
+  margin-top: 23.8em;
+  margin-left: 19em;
+}
+
+/* Text style */
+.text {
+  font-size: 1.5rem;
+}
+
+/* Button style */
+.button-front {
+  background-color: #ffffff !important;
+  color: black !important;
+  /* Force white text color */
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  /* Ensure the font is not inheriting unwanted styles */
+  text-transform: none;
+  /* Remove text-transform if the button text is being capitalized */
+}
+
+/* Hover state */
+.button-front:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+  /* Force black text color on hover */
+}

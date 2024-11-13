@@ -1,23 +1,27 @@
-/* Apply to the body and html to ensure the page uses full height */
+/* Ensure the entire page uses full height and width */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
 }
 
-/* Flexbox layout for the entire app container */
+/* Main container for the app */
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  /* Make sure the container takes up the entire height of the viewport */
+  width: 100%;
+  /* Ensure full-width */
 }
 
-/* This will take up all the available space, pushing the footer to the bottom */
+/* Main content area, takes up remaining space */
 .content-area {
   flex-grow: 1;
-  padding: 20px;
+  width: 100%;
+  /* Ensure full-width */
 }
 
 /* Footer styling */
@@ -25,9 +29,8 @@ body {
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 20px;
-  margin-top: 20px;
-  /* Adds spacing above footer */
+
+  /* Remove margin to avoid unexpected layout shifting */
 }
 
 .footer h1 {

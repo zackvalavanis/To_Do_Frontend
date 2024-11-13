@@ -9,6 +9,7 @@ import axios from 'axios';
 import { HomePage } from './HomePage.jsx';
 import { AuthProvider } from './AuthContext.jsx';
 import { ActivityShow } from './ActivityShow.jsx';
+import { MyActivites } from './MyActivities.jsx';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,20 @@ const router = createBrowserRouter([
             console.log(response.data);
             return response.data;
           })
+      }, 
+      { 
+        path: '/MyActivities', 
+        element: <MyActivites />, 
+        loader: async ({params}) => {
+          try { 
+             const response = await axios.get(`http://localhost:3000/photos/${params.id}.json`);
+            console.log(response.data);
+            return response.data;
+          } catch (error) { 
+          console.log("error loading data", error);
+          throw error;
+          }
+        }
       }
     ]
   }

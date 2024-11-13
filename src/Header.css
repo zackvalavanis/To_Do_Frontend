@@ -5,14 +5,14 @@
   margin-right: 8px;
 }
 
-.navbar-brand {
-  background-color: #fff;
-  /* Add a white background or any color */
-  padding: 5px;
-  /* Optional: Add some padding to make the logo look better */
+*/ body,
+.navbar {
+  margin: 0;
+  padding: 0;
 }
 
-.navbar {
-  background-color: #333;
-  /* Dark background color for contrast */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
