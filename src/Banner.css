@@ -6,70 +6,97 @@ body {
   width: 100%;
   overflow-x: hidden;
   /* Prevent horizontal overflow */
+  box-sizing: border-box;
 }
 
 /* Full-width banner with no extra margin or padding */
 .banner {
   position: relative;
-  /* Make it a positioned container for absolute elements */
+  /* Positioned container for absolute elements */
   background-image: url('https://wallpapers.com/images/hd/wide-3440-x-1440-background-58v8ac083ss8wxwy.jpg');
   height: 55vh;
   width: 100vw;
-  /* Full viewport width */
   background-size: cover;
   background-position: center;
   display: flex;
-  margin: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding: 0;
   box-sizing: border-box;
 }
 
 /* Black box on the left side */
-.banner .black-box {
-  position: absolute;
-  top: 0;
-  left: 0;
+.black-box {
   width: 20%;
-  /* Adjust the width of the box */
+  min-width: 200px;
+  /* Minimum width for readability on smaller screens */
+  max-width: 300px;
+  /* Cap width for larger screens */
   height: 85%;
-  /* Make it take the full height of the banner */
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 20px;
   box-sizing: border-box;
-  /* Ensures padding doesn’t affect the width */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Positions text at the top and button at the bottom */
 }
 
-.banner-info {
-  color: white;
-  margin-top: 23.8em;
-  margin-left: 19em;
-}
-
-/* Text style */
-.text {
-  font-size: 1.5rem;
+/* Title text style in the black box */
+.black-box p {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.4;
 }
 
 /* Button style */
 .button-front {
   background-color: #ffffff !important;
   color: black !important;
-  /* Force white text color */
   padding: 10px 20px;
   border-radius: 5px;
   font-family: Arial, sans-serif;
-  /* Ensure the font is not inheriting unwanted styles */
-  text-transform: none;
-  /* Remove text-transform if the button text is being capitalized */
+  align-self: flex-end;
+  /* Aligns button to the bottom-right corner */
 }
 
 /* Hover state */
 .button-front:hover {
   background-color: rgba(0, 0, 0, 0.5) !important;
   color: white !important;
-  /* Force black text color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .banner {
+    height: 60vh;
+    /* Adjust banner height on smaller screens */
+  }
+
+  .black-box {
+    width: 50%;
+    /* Expand the black box width for smaller screens */
+    height: auto;
+  }
+
+  .black-box p {
+    font-size: 1rem;
+  }
+
+  .button-front {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    height: 50vh;
+    /* Further adjust banner height for very small screens */
+  }
+
+  .black-box {
+    width: 70%;
+    /* Expand the black box width even more */
+  }
 }

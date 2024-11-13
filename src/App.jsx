@@ -59,11 +59,11 @@ const router = createBrowserRouter([
           })
       }, 
       { 
-        path: '/MyActivities', 
+        path: '/MyActivities/', 
         element: <MyActivites />, 
-        loader: async ({params}) => {
+        loader: async () => {
           try { 
-             const response = await axios.get(`http://localhost:3000/photos/${params.id}.json`);
+             const response = await axios.get(`http://localhost:3000/activities.json`);
             console.log(response.data);
             return response.data;
           } catch (error) { 

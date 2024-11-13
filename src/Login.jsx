@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from './AuthContext.jsx'
 import React, { useContext } from 'react';
+import './Login.css' 
 
 const jwt = localStorage.getItem("jwt")
 if(jwt) { 
@@ -13,8 +14,6 @@ export function Login() {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const { setCurrentUser, setIsLoggedIn } = useContext(AuthContext);
-
-  
 
   const handleSubmit = async (event) => { 
     event.preventDefault();
@@ -39,22 +38,26 @@ export function Login() {
   };
 
   return (
+    <div className='login-container'>
     <div id="login">
-    <h1>Login</h1>
+      <div className='login'>
+        <h1>Login</h1>
+      </div>
     <ul>
       {errors.map((error) => (
         <li key={error}>{error}</li>
       ))}
     </ul>
-    <form onSubmit={handleSubmit}>
+    <form className='form-login' onSubmit={handleSubmit}>
       <div>
-        Email: <input name="email" type="email" />
+        Email: <input name="email" type="email" placeholder='example@gmail.com'/>
       </div>
       <div>
-        Password: <input name="password" type="password" />
+        Password: <input name="password" type="password" placeholder='password'/>
       </div>
       <button type="submit">Login</button>
     </form>
+  </div>
   </div>
 );
 }

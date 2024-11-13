@@ -1,15 +1,15 @@
-import axios from 'axios'
-import { useState } from 'react'
+import axios from 'axios';
+import { useState } from 'react';
+import './Signup.css'
 
-export function Signup () { 
+export function Signup() { 
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = (event) => { 
     event.preventDefault();
-    console.log('handleSubmit');
     setErrors([]);
     const params = new FormData(event.target);
-    axios 
+    axios
       .post("http://localhost:3000/users.json", params)
       .then((response) => { 
         console.log(response.data);
@@ -20,28 +20,34 @@ export function Signup () {
         setErrors(error.response.data.errors);
       });
   };
+
   return ( 
-    <div id='signup'>
+    <div className='signup-container'>
+    <div id="signup">
+      <div className="signup">
+        <h1>Signup</h1>
+      </div>
       <ul>
         {errors.map((error) => ( 
           <li key={error}>{error}</li>
         ))}
       </ul>
-      <form onSubmit={handleSubmit}>
-      <div>
-          Name: <input name="name" type="text" />
+      <form className="form-signup" onSubmit={handleSubmit}>
+        <div>
+          Name: <input name="name" type="text" placeholder='Bob Jones'/>
         </div>
         <div>
-          Email: <input name="email" type="email" />
+          Email: <input name="email" type="email" placeholder='example@gmail.com'/>
         </div>
         <div>
-          Password: <input name="password" type="password" />
+          Password: <input name="password" type="password" placeholder='password'/>
         </div>
         <div>
-          Password confirmation: <input name="password_confirmation" type="password" />
+          Password confirmation: <input name="password_confirmation" type="password" placeholder='Retype Password' />
         </div>
         <button type="submit">Signup</button>
       </form>
     </div>
-  )
+    </div>
+  );
 }
