@@ -45,6 +45,11 @@ export function Header() {
                   <a className="nav-link" href="/Calendar">Calendar</a>
                 ) : null}
               </li>
+              <li className="nav-item">
+                {localStorage.jwt ? (
+                  <a className="nav-link" href="/MyActivities">Activities</a>
+                ) : null}
+              </li>
             </ul>
             <ul className="navbar-nav ms-auto"> {/* Align dropdown to the right */}
               <li className="nav-item dropdown">
