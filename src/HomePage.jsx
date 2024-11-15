@@ -6,18 +6,8 @@ import './HomePage.css'
 
 
 export function HomePage () {
-  const [name, setName] = useState("")
-  const navigate = useNavigate();
-
   
-  
-  const handleClick = (event) => { 
-    event.preventDefault();
-    setName('johnny')
-    console.log(name)
-  }
-
-  return ( 
+    return ( 
     <div>
     <Banner>
     </Banner>

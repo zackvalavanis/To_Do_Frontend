@@ -1,40 +1,58 @@
-import { useLoaderData} from 'react-router-dom'
-import { useState } from 'react'
-import axios from 'axios'
-import { toast } from 'react-toastify';
-import { useEffect } from 'react'
-import { format } from 'date-fns';
+import { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Required for styling
 
+// Create a Context for activities
+const ActivityContext = createContext();
 
-export function MyActivites () { 
-  const initialActivities = useLoaderData();
-  const [activities, setActivities] = useState(initialActivities);
+export function ActivityProvider({ children }) {
+  const [activities, setActivities] = useState([]);
+  
+  // Fetch activities from the server
+  useEffect(() => {
+    axios.get('http://localhost:3000/activities.json')
+      .then((response) => {
+        setActivities(response.data);
+        console.log("Activities fetched:", response.data); // Add this line to check if the data is being loaded correctly
+      })
+      .catch((error) => {
+        console.error("Error fetching activities:", error);
+      });
+  }, []);
+  
 
+  return (
+    <ActivityContext.Provider value={{ activities, setActivities }}>
+      {children}
+    </ActivityContext.Provider>
+  );
+}
 
-  const formatDate = (isoString) => { 
-    const date = new Date(isoString);
+// Custom hook to use activities
+export function useActivities() {
+  return useContext(ActivityContext);
+}
 
-    const options = { 
-      month: '2-digit',
-      day: '2-digit',
-      year: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12:true,
-      timeZone: 'UTC'
-    };
-    return date.toLocaleString('en-US', options)
-  }
+// Function to format the date
+const formatDate = (isoString) => { 
+  const date = new Date(isoString);
+  const options = { 
+    month: '2-digit',
+    day: '2-digit',
+    year: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12:true,
+    timeZone: 'UTC'
+  };
+  return date.toLocaleString('en-US', options);
+};
 
-  const handleDestroy = (id) => { 
-    console.log(handleDestroy, id);
-    axios.delete(`http://localhost:3000/activities/${id}.json`).then(() => { 
-      setActivities((prevActivities => prevActivities.filter((activity) => activity.id !== id)));
-    })
-    .catch((error) => { 
-      console.log("Error deleting", error)
-    })
-  }
+export function App() {
+  const { activities } = useActivities();
+
+  // Function to notify about upcoming events
   const notifyUpcomingEvents = () => {
     console.log("Checking for events 10 minutes away...");
   
@@ -80,19 +98,10 @@ export function MyActivites () {
     }
   }, [activities]);
 
-  return ( 
+  return (
     <div>
-      <h1>
-        My Activities
-      </h1>
-      {activities.map((activity) => (
-        <div key={activity.id}>
-          <h1>{activity.name}</h1>
-          <p>{formatDate(activity.start_datetime)}</p>
-          <p>{formatDate(activity.end_datetime)}</p>
-          <button onClick={() => handleDestroy(activity.id)}>Delete</button>
-        </div>
-      ))}
+      <ToastContainer /> {/* This renders the toast notifications */}
+      {/* Your other components */}
     </div>
   )
 }

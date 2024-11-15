@@ -8,6 +8,7 @@ import { Modal } from './Modal.jsx';
 import './Calendar.css';
 import { ActivityShow } from './ActivityShow.jsx';
 
+
 export function Calendar() {
   const activities = useLoaderData() || [];
   const [events, setEvents] = useState([]); // change to curly and see if it works 
@@ -28,6 +29,7 @@ export function Calendar() {
         console.error('Invalid date:', start_datetime, end_datetime);
         return null; // Skip invalid events
       }
+      // console.log(start_datetime)
 
       return { 
         id, 

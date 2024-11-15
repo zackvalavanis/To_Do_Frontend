@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ActivityShow.css';
 import { useAuth } from './AuthContext';
+import { toast } from 'react-toastify';
 
-export function ActivityShow({ eventId, selectedDate, setEvents }) {
+export function ActivityShow({ eventId, selectedDate, setEvents, events }) {
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
@@ -43,8 +44,9 @@ const handleCreate=(params, successCallback)=> {
           title: response.data.name,
           start: new Date(response.data.start_datetime),
           end: new Date(response.data.end_datetime),
-        }
+        },
       ]);
+      toast.success('Created new Activity!')
       successCallback();
     });
 }
@@ -150,10 +152,28 @@ const handleCreate=(params, successCallback)=> {
           end: new Date(response.data.end_datetime),
         }
       ]);
+      
+      // Display success toast after successful update
+      toast.success("Successfully Updated", {
+        icon: "🚀",  // Customize icon if needed
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+      
+      // Call the success callback if provided
+      if (successCallback) {
+        successCallback();
+      }
+  
     } catch (error) {
       console.log('Error updating activity:', error);
     }
   };
+  
   
   
 
@@ -187,11 +207,13 @@ const handleCreate=(params, successCallback)=> {
     console.log(handleDestroy, id);
     axios.delete(`http://localhost:3000/activities/${id}.json`).then(() => { 
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
+      toast.success('Deleted Activity')
     })
     .catch((error) => { 
       console.log("Error deleting", error)
     })
   }
+
 
   if (!activity) {
     return (

@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import './App.css';
 import { Header } from './Header.jsx';
 import { Footer } from './Footer.jsx';
@@ -10,7 +10,11 @@ import { HomePage } from './HomePage.jsx';
 import { AuthProvider } from './AuthContext.jsx';
 import { ActivityShow } from './ActivityShow.jsx';
 import { MyActivites } from './MyActivities.jsx';
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer here
+import { ActivityProvider } from './ActivityContext.jsx'; // Import ActivityProvider
+import 'react-toastify/dist/ReactToastify.css'; // Make sure this is imported
 
+// Set up the routes
 const router = createBrowserRouter([
   {
     element: (
@@ -78,9 +82,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    // Wrap the whole app with the ActivityProvider
+    <ActivityProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <ToastContainer /> {/* Place ToastContainer here to render globally */}
+      </AuthProvider>
+    </ActivityProvider>
   );
 }
 
