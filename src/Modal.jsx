@@ -7,7 +7,7 @@ export function Modal ({ children, show, onClose}) {
       <section className='modal-main'>
         {children}
         <button className='close' type='button' onClick={onClose}>
-        Close
+        &#x2715;
         </button>
       </section>
     </div>

@@ -10,13 +10,12 @@ import { ActivityShow } from './ActivityShow.jsx';
 
 export function Calendar() {
   const activities = useLoaderData() || [];
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]); // change to curly and see if it works 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentActivity, setCurrentActivity] = useState({});
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
 
-  // Fetch and format activities once on mount
   useEffect(() => {
     const formattedEvents = activities.map((activity) => {
       const { id, name, start_datetime, end_datetime, description, finished } = activity;
@@ -93,7 +92,11 @@ export function Calendar() {
         eventClick={handleEventClick}
       />
       <Modal show={isModalVisible} onClose={handleClose}>   
-        <ActivityShow eventId={selectedEventId} selectedDate={selectedDate} activity={currentActivity} />
+        <ActivityShow 
+        eventId={selectedEventId} 
+        selectedDate={selectedDate} 
+        activity={currentActivity} 
+        setEvents={setEvents}/>
       </Modal>
     </div>
   );

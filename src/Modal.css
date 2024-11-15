@@ -28,17 +28,18 @@
   background: none;
   border: 1px;
   position: absolute;
-  top: 28em;
+  top: 1.5em;
   /* Top position, slightly moved down for better alignment */
-  right: 2.5em;
+  right: 1.5em;
   /* Right position, gives space from the edge */
-  padding: 0.5em;
+  padding: 0.7em;
   /* Adds padding for a better clickable area */
   border-radius: 20%;
   /* Circular button */
   display: flex;
   /* Ensures the button is centered */
   justify-content: center;
+  x
   /* Centers the content */
   align-items: center;
   /* Vertically center-aligns the button text */
