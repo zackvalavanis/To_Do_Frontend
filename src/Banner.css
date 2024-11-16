@@ -40,7 +40,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* Positions text at the top and button at the bottom */
+  position: absolute;
+  left: -300px;
+  /* Initially positioned off-screen */
+  animation: slideIn 1s ease-out forwards;
+  /* Slide in animation */
 }
 
 /* Title text style in the black box */
@@ -67,6 +71,19 @@ body {
   color: white !important;
 }
 
+/* Slide-in animation definition */
+@keyframes slideIn {
+  0% {
+    left: -300px;
+    /* Start from off-screen */
+  }
+
+  100% {
+    left: 0;
+    /* End at its normal position */
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .banner {
@@ -78,6 +95,8 @@ body {
     width: 50%;
     /* Expand the black box width for smaller screens */
     height: auto;
+    position: relative;
+    /* Remove absolute positioning for smaller screens */
   }
 
   .black-box p {

@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -16,6 +16,7 @@ export function Calendar() {
   const [currentActivity, setCurrentActivity] = useState({});
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const calendarRef = useRef(null); // Ref for the calendar
 
   useEffect(() => {
     const formattedEvents = activities.map((activity) => {
@@ -81,17 +82,62 @@ export function Calendar() {
     setSelectedEventId(null);
   };
 
+  const getMonthBackgroundColor = (monthIndex) => {
+    console.log("Month Index: ", monthIndex); // Log the current month index
+    switch (monthIndex) {
+      case 9: return 'rgba(255, 69, 0, 0.4)';  // November - Autumn Red (Thanksgiving)
+      case 10: return 'rgba(34, 139, 34, 0.4)';  // December - Red (Christmas)
+      case 11: return 'rgba(255, 215, 0, 0.4)'; // January - Bright Gold (New Year)
+      case 0: return 'rgba(255, 182, 193, 0.4)'; // February - Soft Pink (Valentine's Day)
+      case 1: return 'rgba(34, 139, 34, 0.4)';  // March - Emerald Green (St. Patrick's Day)
+      case 2: return 'rgba(255, 255, 224, 0.4)'; // April - Pastel Yellow (Easter)
+      case 3: return 'rgba(230, 230, 250, 0.4)'; // May - Lavender (Mother's Day)
+      case 4: return 'rgba(135, 206, 235, 0.4)'; // June - Sky Blue (Summer)
+      case 5: return 'rgba(255, 0, 0, 0.4)';    // July - Red (Independence Day)
+      case 6: return 'rgba(255, 127, 80, 0.4)'; // August - Bright Coral (Beach/Hot Weather)
+      case 7: return 'rgba(255, 140, 0, 0.4)';  // September - Pumpkin Orange (Fall/Harvest)
+      case 8: return 'rgba(255, 94, 77, 0.4)';  // October - Pumpkin Orange (Fall/Harvest)
+      default: return 'rgba(255, 255, 255, 0.4)'; // Default - White
+    }
+  };
+
+    const handleDatesSet = (info) => {
+      const monthIndex = info.view.currentStart.getMonth(); // Get the current month index
+      const backgroundColor = getMonthBackgroundColor(monthIndex);
+    
+      const calendarApi = calendarRef.current?.getApi();
+      const calendarElement = calendarApi?.el;
+    
+      console.log('calendarElement:', calendarElement); // Log for debugging
+      console.log('backgroundColor:', backgroundColor); // Log for debugging
+    
+      if (calendarElement) {
+        // Target the specific view container for the month grid
+        const monthGrid = calendarElement.querySelector('.fc-dayGridMonth-view'); // FullCalendar class for the month view
+        if (monthGrid) {
+          monthGrid.style.backgroundColor = backgroundColor; // Set background color for the month grid
+        } else {
+          console.error("Month grid view not found.");
+        }
+      }
+    };
+    
+    
+  
+
   return (
-    <div className="w-full h-[80vh] mx-auto">
+   <div className="w-full h-[80vh] mx-auto">
       <FullCalendar
+        ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={events}
         editable={true}
         selectable={true}
         select={handleShow}
-        timeZone="UTC"  // Set to UTC to display everything in UTC
+        timeZone="UTC" 
         eventClick={handleEventClick}
+        datesSet={handleDatesSet}  // Use datesSet instead of datesRender
       />
       <Modal show={isModalVisible} onClose={handleClose}>   
         <ActivityShow 

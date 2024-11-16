@@ -86,7 +86,7 @@ export function MyActivites() {
 
     const intervalId = setInterval(() => {
       notifyUpcomingEvents();
-    }, 60000); // Check every 10 seconds
+    }, 30000); // Check every 10 seconds
 
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, []); // Empty dependency array to run only once on mount

@@ -1,0 +1,68 @@
+/* Apply full height to body and html to ensure the page stretches to the full height */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* This container will take the full height of the page, pushing the footer down */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Ensures that the body takes up the full height */
+}
+
+/* This container will grow to take up the remaining space between the header and footer */
+.content-area {
+  flex-grow: 1;
+}
+
+/* Container for the stats component */
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  flex-grow: 1;
+  /* Makes sure it takes remaining space if needed */
+}
+
+/* Style the header */
+.stats-header {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Container for the chart */
+.chart-container {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+/* For responsiveness */
+@media (max-width: 768px) {
+  .stats-container {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .stats-header {
+    font-size: 1.5rem;
+  }
+
+  .chart-container {
+    height: 300px;
+  }
+}
