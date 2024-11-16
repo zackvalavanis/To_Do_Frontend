@@ -56,13 +56,17 @@ export function MyActivites() {
       const eventStartTimeUTC = eventStartTime.getTime(); // This is already in UTC
       const timeDifference = eventStartTimeUTC - nowUTC;
       console.log(timeDifference);
-    
-      if (timeDifference === 15 * 60 * 1000) {
+
+      if (timeDifference > 0 && timeDifference <= 15 * 60 * 1000) {
         console.log(
-          `Event "${activity.name}" starts in 15 minutes.`
+          `Event "${activity.name}" starts in ${Math.floor(
+            timeDifference / 60000
+          )} minutes.`
         );
         toast.info(
-          `Reminder: "${activity.name}" starts in 15 minutes!`,
+          `Reminder: "${activity.name}" starts in ${Math.floor(
+            timeDifference / 60000
+          )} minutes!`,
           {
             position: 'top-right',
             // autoClose: 10000,
@@ -72,51 +76,17 @@ export function MyActivites() {
             progress: undefined,
           }
         );
-      }
-    
-      if (timeDifference === 5 * 60 * 1000) {
-        console.log(
-          `Event "${activity.name}" starts in 5 minutes.`
-        );
-        toast.info(
-          `Reminder: "${activity.name}" starts in 5 minutes!`,
-          {
-            position: 'top-right',
-            // autoClose: 10000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            progress: undefined,
-          }
-        );
-      }
-    
-      if (timeDifference === 2 * 60 * 1000) {
-        console.log(
-          `Event "${activity.name}" starts in 2 minutes.`
-        );
-        toast.info(
-          `Reminder: "${activity.name}" starts in 2 minutes!`,
-          {
-            position: 'top-right',
-            // autoClose: 10000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            progress: undefined,
-          }
-        ); // Closing this toast.info call here
       }
     });
-    
+  };
 
-
+  // UseEffect for fetching data (only once) and setting up notifications
   useEffect(() => {
     fetchActivities(); // Fetch activities on component mount
 
     const intervalId = setInterval(() => {
       notifyUpcomingEvents();
-    }, 10000); // Check every 10 seconds
+    }, 60000); // Check every 10 seconds
 
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, []); // Empty dependency array to run only once on mount
@@ -126,6 +96,4 @@ export function MyActivites() {
       <ToastContainer />
     </div>
   )
-  }
 }
-

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
 import './Signup.css'
+import { useNavigate } from 'react-router-dom';
 
 export function Signup() { 
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => { 
     event.preventDefault();
@@ -14,6 +16,7 @@ export function Signup() {
       .then((response) => { 
         console.log(response.data);
         event.target.reset();
+        navigate('/Login')
       })
       .catch((error) => { 
         console.log(error.response.data.errors);

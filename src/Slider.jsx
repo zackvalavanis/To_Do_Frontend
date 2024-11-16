@@ -45,10 +45,10 @@ const AppSlider = () => {
     });
 
     slides.push({
-      link: '/MyActivities',
-      imgSrc: "https://media.istockphoto.com/id/1990126590/photo/october-2024-white-calendar-with-green-blurred-background.webp?b=1&s=612x612&w=0&k=20&c=3O0eRPh3Pe1MjprGyq2sEgye4A15mODLlxnM_6DT8n0=",
-      title: "My Activities", 
-      description: "What do I have planned",
+      link: '/Stats',
+      imgSrc: "https://static-00.iconduck.com/assets.00/stats-icon-1024x1005-44rqhmal.png",
+      title: "My Stats", 
+      description: "Your Stats",
     });
   } else {
     slides.push({

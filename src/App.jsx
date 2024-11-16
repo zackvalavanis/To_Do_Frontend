@@ -11,6 +11,7 @@ import { AuthProvider } from './AuthContext.jsx';
 import { ActivityShow } from './ActivityShow.jsx';
 import { MyActivites } from './MyActivities.jsx';
 import 'react-toastify/dist/ReactToastify.css'; // Make sure this is imported
+import { Stats } from './Stats'
 
 // Set up the routes
 const router = createBrowserRouter([
@@ -60,20 +61,20 @@ const router = createBrowserRouter([
             return response.data;
           })
       }, 
-      // { 
-      //   path: '/MyActivities/', 
-      //   element: <MyActivites />, 
-      //   loader: async () => {
-      //     try { 
-      //        const response = await axios.get(`http://localhost:3000/activities.json`);
-      //       console.log(response.data);
-      //       return response.data;
-      //     } catch (error) { 
-      //     console.log("error loading data", error);
-      //     throw error;
-      //     }
-      //   }
-      // }
+      { 
+        path: '/Stats', 
+        element: <Stats />, 
+        loader: async () => {
+          try { 
+             const response = await axios.get(`http://localhost:3000/activities.json`);
+            console.log(response.data);
+            return response.data;
+          } catch (error) { 
+          console.log("error loading data", error);
+          throw error;
+          }
+        }
+      }
     ]
   }
 ]);

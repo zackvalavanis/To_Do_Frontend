@@ -8,7 +8,7 @@ export function Banner () {
     <div className='banner'>
       <div className='black-box'>
         <p>Master Your Time, Master Your Life</p>
-        <Button className='button-front' onClick={() => navigate('/Login')}>Login</Button>
+        {!localStorage.jwt ? <Button className='button-front' onClick={() => navigate('/Login')}>Login</Button> : null}
       </div>
     </div>
   );

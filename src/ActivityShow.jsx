@@ -116,6 +116,12 @@ const handleCreate=(params, successCallback)=> {
 
   const formattedDate = selectedDate ? new Date(selectedDate).toISOString().split('T')[0] : '';
 
+  useEffect(() => {
+    if (activity) {
+      setFinished(activity.finished); // Sync local state with activity
+    }
+  }, [activity]);
+
   const handleUpdate = async (event, id, successCallback) => {
     event.preventDefault();
     const params = new FormData(event.target);
@@ -135,44 +141,39 @@ const handleCreate=(params, successCallback)=> {
     const processedParams = {
       user_id: params.get('user_id'),
       name: params.get('name'),
-      finished: params.get('finished') === 'true', // Ensure boolean value
+      finished: params.get('finished'),
       start_datetime: startDatetime.toISOString(),
       end_datetime: endDatetime.toISOString(),
     };
   
     try {
       const response = await axios.patch(`http://localhost:3000/activities/${id}.json`, processedParams);
-      console.log('Updated Activity:', response.data); // Log the response data to check the structure
-      setEvents((prevEvents) => [
-        ...prevEvents,
-        {
-          id: response.data.id,
-          title: response.data.name,
-          start: new Date(response.data.start_datetime),
-          end: new Date(response.data.end_datetime),
-        }
-      ]);
-      
-      // Display success toast after successful update
-      toast.success("Successfully Updated", {
-        icon: "🚀",  // Customize icon if needed
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-      });
-      
-      // Call the success callback if provided
-      if (successCallback) {
-        successCallback();
-      }
+      const updatedActivity = response.data;
   
+      // Update local activity and state
+      setActivity(updatedActivity);
+      setFinished(updatedActivity.finished);
+  
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.id === updatedActivity.id
+            ? {
+                ...event,
+                title: updatedActivity.name,
+                start: new Date(updatedActivity.start_datetime),
+                end: new Date(updatedActivity.end_datetime),
+              }
+            : event
+        )
+      );
+  
+      toast.success('Successfully Updated!', { icon: '🚀' });
+      successCallback && successCallback();
     } catch (error) {
-      console.log('Error updating activity:', error);
+      console.error('Error updating activity:', error);
     }
   };
+  
   
   
   
@@ -346,8 +347,8 @@ const handleCreate=(params, successCallback)=> {
               name="finished"
               type="radio"
               value="true"
-              checked={activity.finished === true}
-              onChange={() => setFinished(true)}
+              checked={finished === true} // Use the `finished` state
+              onChange={() => setFinished(true)} // Update the `finished` state
             /> Yes
           </label>
           <label>
@@ -355,8 +356,8 @@ const handleCreate=(params, successCallback)=> {
               name="finished"
               type="radio"
               value="false"
-              checked={activity.finished === false}
-              onChange={() => setFinished(false)}
+              checked={finished === false} // Use the `finished` state
+              onChange={() => setFinished(false)} // Update the `finished` state
             /> No
           </label>
         </div>

@@ -47,7 +47,7 @@ export function Header() {
               </li>
               <li className="nav-item">
                 {localStorage.jwt ? (
-                  <a className="nav-link" href="/MyActivities">Activities</a>
+                  <a className="nav-link" href="/Stats">Stats</a>
                 ) : null}
               </li>
             </ul>
