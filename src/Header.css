@@ -1,11 +1,5 @@
-.navbar-brand {
-  position: center;
-  height: 40px;
-  width: 40px;
-  margin-right: 8px;
-}
-
-*/ body,
+/* Resetting default margins and paddings */
+body,
 .navbar {
   margin: 0;
   padding: 0;
@@ -15,4 +9,31 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Styling for the navbar */
+.navbar {
+  position: sticky;
+  /* Makes the navbar stick to the top of the viewport */
+  top: 0;
+  /* Ensures it stays at the top when scrolling */
+  z-index: 1000;
+  /* Ensures it appears above other elements */
+  background-color: #fff;
+  /* Background color to make it visible */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow for visibility */
+  padding: 10px 20px;
+  /* Adds some padding for better aesthetics */
+}
+
+/* Optional: Navbar brand/logo styling */
+.navbar-brand {
+  display: flex;
+  /* Aligns logo and text horizontally */
+  align-items: center;
+  /* Centers content vertically */
+  height: 40px;
+  width: 40px;
+  margin-right: 8px;
 }

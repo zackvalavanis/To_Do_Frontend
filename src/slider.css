@@ -1,4 +1,8 @@
 /* Container for the entire slider */
+body {
+  background-color: rgba(155, 206, 124, 0.238);
+}
+
 .app-slider-container {
   width: 100%;
   max-width: 1000px;

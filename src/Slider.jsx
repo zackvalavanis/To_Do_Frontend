@@ -62,7 +62,7 @@ const AppSlider = () => {
       link: "/Signup",
       imgSrc: "https://t3.ftcdn.net/jpg/01/28/66/38/360_F_128663879_BhV0XbgJ03pFlW6JyyIj4riXo2whZnwb.jpg",
       title: "Signup",
-      description: "Join the community and always be on time",
+      description: "Track Your Success",
     });
   }
 
