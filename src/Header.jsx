@@ -14,6 +14,7 @@ export function Header() {
   useEffect(() => { 
     if (!localStorage.jwt){ 
       console.log('user Logged out');
+      
     }
   }, []);
 

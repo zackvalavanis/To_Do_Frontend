@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { AuthContext } from './AuthContext';
 import React, { useContext} from 'react';
+import { toast } from 'react-toastify';
 
 export function Logout({ className }) { 
   const { setCurrentUser, setIsLoggedIn, logout} = useContext(AuthContext);
@@ -11,6 +12,7 @@ export function Logout({ className }) {
     localStorage.removeItem("jwt");
     setCurrentUser(null);
     setIsLoggedIn(false);
+    toast.success('User successfully Logged Out.')
     console.log('You have successfully Logged Off')
   }
   return ( 

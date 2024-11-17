@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from './AuthContext.jsx'
 import React, { useContext } from 'react';
 import './Login.css' 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const jwt = localStorage.getItem("jwt")
 if(jwt) { 
@@ -30,6 +32,7 @@ export function Login() {
       const userResponse = await axios.get("http://localhost:3000/users/current.json");
       setCurrentUser(userResponse.data);
       setIsLoggedIn(true);
+      toast.success('User successfully Logged in')
       navigate('/');
     } catch (error) {
       console.log(error.response);

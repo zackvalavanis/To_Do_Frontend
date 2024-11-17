@@ -36,7 +36,6 @@ const handleCreate=(params, successCallback)=> {
   console.log('handleCreate', params);
 
   axios.post("http://localhost:3000/activities.json", params).then((response)=> {
-      console.log(response.data);
       setEvents((prevEvents) => [
         ...prevEvents,
         {
@@ -365,7 +364,7 @@ const handleCreate=(params, successCallback)=> {
           Update Activity
         </button>
       </form>
-      <button onClick={() => handleDestroy(activity.id)}>Delete</button>
+      <button className="btn-delete" onClick={() => handleDestroy(activity.id)}>Delete</button>
     </div>
   );
 }

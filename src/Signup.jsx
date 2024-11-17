@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import './Signup.css'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 export function Signup() { 
   const [errors, setErrors] = useState([]);
@@ -16,6 +17,7 @@ export function Signup() {
       .then((response) => { 
         console.log(response.data);
         event.target.reset();
+        toast.success("User Successfully Signed Up.")
         navigate('/Login')
       })
       .catch((error) => { 

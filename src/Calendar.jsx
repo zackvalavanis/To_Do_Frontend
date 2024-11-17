@@ -30,7 +30,6 @@ export function Calendar() {
         console.error('Invalid date:', start_datetime, end_datetime);
         return null; // Skip invalid events
       }
-      // console.log(start_datetime)
 
       return { 
         id, 
@@ -107,9 +106,6 @@ export function Calendar() {
     
       const calendarApi = calendarRef.current?.getApi();
       const calendarElement = calendarApi?.el;
-    
-      console.log('calendarElement:', calendarElement); // Log for debugging
-      console.log('backgroundColor:', backgroundColor); // Log for debugging
     
       if (calendarElement) {
         // Target the specific view container for the month grid
