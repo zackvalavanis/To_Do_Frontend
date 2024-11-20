@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -8,13 +8,13 @@ import { Modal } from './Modal.jsx';
 import './Calendar.css';
 import { ActivityShow } from './ActivityShow.jsx';
 
-
 export function Calendar() {
   const activities = useLoaderData() || [];
-  const [events, setEvents] = useState([]); // change to curly and see if it works 
+  const [events, setEvents] = useState([]); 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentActivity, setCurrentActivity] = useState({});
   const [selectedEventId, setSelectedEventId] = useState(null);
+  const [isEventModal, setIsEventModal] = useState(false); 
   const [selectedDate, setSelectedDate] = useState(null);
   const calendarRef = useRef(null); // Ref for the calendar
 
@@ -57,10 +57,11 @@ export function Calendar() {
     };
     setCurrentActivity(clickedEvent); // Store event details in currentActivity
     setIsModalVisible(true); // Show modal
+    setIsEventModal(true); // Make modal larger for event details
   };
 
-
   const handleShow = (info) => {
+    console.log("Date clicked:", info.start);  // Check if this logs when clicking a date
     const selectedDate = info.start; 
     setSelectedDate(selectedDate); 
 
@@ -68,55 +69,44 @@ export function Calendar() {
     setSelectedEventId(null);
 
     setIsModalVisible(true);
+    setIsEventModal(false); // Modal should be smaller for date selection
   };
 
-  
   const handleClose = () => { 
     setIsModalVisible(false);
     setSelectedEventId(null);
+    setIsEventModal(false); // Reset the modal size
+  };
+
+  const handleDatesSet = (info) => {
+    const monthIndex = info.view.currentStart.getMonth(); 
+    const backgroundColor = getMonthBackgroundColor(monthIndex);
+    
+    const calendarApi = calendarRef.current?.getApi();
+    const calendarElement = calendarApi?.el;
+    
+    if (calendarElement) {
+      const monthGrid = calendarElement.querySelector('.fc-dayGridMonth-view');
+      if (monthGrid) {
+        monthGrid.style.backgroundColor = backgroundColor;
+      } else {
+        console.error("Month grid view not found.");
+      }
+    }
   };
 
   const getMonthBackgroundColor = (monthIndex) => {
     switch (monthIndex) {
-      case 9: return 'rgba(255, 69, 0, 0.4)';  
-      case 10: return 'rgba(34, 139, 34, 0.4)';  
-      case 11: return 'rgba(255, 215, 0, 0.4)'; 
-      case 0: return 'rgba(255, 182, 193, 0.4)'; 
-      case 1: return 'rgba(34, 139, 34, 0.4)';  
-      case 2: return 'rgba(255, 255, 224, 0.4)'; 
-      case 3: return 'rgba(230, 230, 250, 0.4)'; 
-      case 4: return 'rgba(135, 206, 235, 0.4)'; 
-      case 5: return 'rgba(255, 0, 0, 0.4)';    
-      case 6: return 'rgba(255, 127, 80, 0.4)';
-      case 7: return 'rgba(255, 140, 0, 0.4)';  
-      case 8: return 'rgba(255, 94, 77, 0.4)';  
-      default: return 'rgba(255, 255, 255, 0.4)'; 
+      case 9: return 'rgba(255, 69, 0, 0.4)';
+      case 10: return 'rgba(34, 139, 34, 0.4)';
+      case 11: return 'rgba(255, 215, 0, 0.4)';
+      case 0: return 'rgba(255, 182, 193, 0.4)';
+      default: return 'rgba(255, 255, 255, 0.4)';
     }
   };
 
-    const handleDatesSet = (info) => {
-      const monthIndex = info.view.currentStart.getMonth(); 
-      const backgroundColor = getMonthBackgroundColor(monthIndex);
-    
-      const calendarApi = calendarRef.current?.getApi();
-      const calendarElement = calendarApi?.el;
-    
-      if (calendarElement) {
-        // Target the specific view container for the month grid
-        const monthGrid = calendarElement.querySelector('.fc-dayGridMonth-view'); // FullCalendar class for the month view
-        if (monthGrid) {
-          monthGrid.style.backgroundColor = backgroundColor; // Set background color for the month grid
-        } else {
-          console.error("Month grid view not found.");
-        }
-      }
-    };
-    
-    
-  
-
   return (
-   <div className="w-full h-[80vh] mx-auto">
+    <div className="calendar-container">
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
@@ -125,16 +115,16 @@ export function Calendar() {
         editable={true}
         selectable={true}
         select={handleShow}
-        timeZone="UTC" 
+        timeZone="UTC"
         eventClick={handleEventClick}
-        datesSet={handleDatesSet}  
+        datesSet={handleDatesSet}
       />
-      <Modal show={isModalVisible} onClose={handleClose}>   
+      <Modal show={isModalVisible} onClose={handleClose} isLarge={isEventModal}>   
         <ActivityShow 
-        eventId={selectedEventId} 
-        selectedDate={selectedDate} 
-        activity={currentActivity} 
-        setEvents={setEvents}/>
+          eventId={selectedEventId} 
+          selectedDate={selectedDate} 
+          activity={currentActivity} 
+          setEvents={setEvents} />
       </Modal>
     </div>
   );

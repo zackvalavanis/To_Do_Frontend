@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Logout } from './Logout.jsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import React, { useContext } from 'react';
 import './Header.css';
@@ -11,10 +11,20 @@ import { Link } from 'react-router-dom';
 export function Header() {
   const { currentUser, isLoggedIn, logout } = useContext(AuthContext);
 
-  useEffect(() => { 
-    if (!localStorage.jwt){ 
-      console.log('user Logged out');
-    }
+  // State to track login status based on localStorage
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(localStorage.jwt ? true : false);
+
+  useEffect(() => {
+    // Listen for changes in localStorage and update state accordingly
+    const handleStorageChange = () => {
+      setIsUserLoggedIn(localStorage.jwt ? true : false);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   return (
@@ -41,14 +51,14 @@ export function Header() {
                 <Link className="nav-link active" to="/" aria-current="page">Home</Link>
               </li>
               <li className="nav-item">
-                {localStorage.jwt ? (
+                {isUserLoggedIn && (
                   <Link className="nav-link" to="/Calendar">Calendar</Link>
-                ) : null}
+                )}
               </li>
               <li className="nav-item">
-                {localStorage.jwt ? (
+                {isUserLoggedIn && (
                   <Link className="nav-link" to="/Stats">Stats</Link>
-                ) : null}
+                )}
               </li>
             </ul>
             <ul className="navbar-nav ms-auto"> {/* Align dropdown to the right */}
@@ -64,9 +74,9 @@ export function Header() {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end"> {/* Dropdown aligns to the right */}
                   <li><Link className="dropdown-item" to="/">Home</Link></li>
-                  {!localStorage.jwt && <li><Link className="dropdown-item" to="/Login">Login</Link></li>}
-                  {!localStorage.jwt && <li><Link className="dropdown-item" to="/Signup">Signup</Link></li>}
-                  {localStorage.jwt && <li><Logout className="dropdown-item" /></li>}
+                  {!isUserLoggedIn && <li><Link className="dropdown-item" to="/Login">Login</Link></li>}
+                  {!isUserLoggedIn && <li><Link className="dropdown-item" to="/Signup">Signup</Link></li>}
+                  {isUserLoggedIn && <li><Logout className="dropdown-item" /></li>}
                 </ul>
               </li>
             </ul>

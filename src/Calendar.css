@@ -1,93 +1,41 @@
-/* Ensure full height of the calendar */
-.w-full {
-  width: 100%;
+/* Default (Desktop / Larger Screens) */
+.days-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  /* 7 days in a row */
+  gap: 10px;
 }
 
-/* FullCalendar grid styles */
-.fc {
-  font-family: 'Arial', sans-serif;
-}
+/* Mobile Styles */
+@media (max-width: 600px) {
+  .days-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Show one day per row */
+    gap: 10px;
+  }
 
-.fc .fc-daygrid-event {
-  cursor: pointer;
-}
+  .day {
+    width: 100%;
+    /* Ensure each day takes full width */
+  }
 
-.fc-toolbar {
-  background-color: #f4f4f4;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
+  /* Optionally hide extra days or limit visible ones */
+  .day:not(:first-child) {
+    display: none;
+    /* Hide all days except the first */
+  }
 
-.fc-daygrid-day {
-  border: 1px solid #f0f0f0;
-}
+  @media (max-width: 600px) {
+    .days-container {
+      display: flex;
+      flex-direction: column;
+    }
 
-.fc-daygrid-day-number {
-  color: #000;
-}
+    .day:not(:first-child) {
+      display: none;
+      /* Hide all days except the first */
+    }
+  }
 
-.fc-daygrid-day-top {
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Highlight today's date */
-.fc-daygrid-day-today {
-  background-color: #f2f2f2;
-  border-radius: 5px;
-}
-
-/* Selected day styling */
-.fc-daygrid-selected {
-  background-color: #007bff;
-  color: white;
-}
-
-/* Ensure full height of the calendar */
-.w-full {
-  width: 100%;
-}
-
-.fc {
-  font-family: 'Arial', sans-serif;
-}
-
-.fc .fc-daygrid-event {
-  cursor: pointer;
-}
-
-.fc-toolbar {
-  background-color: #f4f4f4;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.fc-daygrid-day {
-  border: 1px solid #f0f0f0;
-}
-
-.fc-daygrid-day-number {
-  color: #000;
-}
-
-.fc-daygrid-day-top {
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Highlight today's date */
-.fc-daygrid-day-today {
-  background-color: #f2f2f2;
-  border-radius: 5px;
-}
-
-/* Selected day styling */
-.fc-daygrid-selected {
-  background-color: #007bff;
-  color: white;
-}
-
-/* Optional: You can set default background color if needed */
-.fc {
-  background-color: white !important;
 }

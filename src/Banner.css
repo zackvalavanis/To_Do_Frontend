@@ -7,14 +7,16 @@ body {
   overflow-x: hidden;
   /* Prevent horizontal overflow */
   box-sizing: border-box;
+  height: 100%;
+  /* Ensure full height is controlled */
 }
 
 /* Full-width banner with no extra margin or padding */
 .banner {
   position: relative;
-  /* Positioned container for absolute elements */
   background-image: url('https://wallpapers.com/images/hd/wide-3440-x-1440-background-58v8ac083ss8wxwy.jpg');
-  height: 55vh;
+  min-height: 50vh;
+  /* Use min-height for flexible height */
   width: 100vw;
   background-size: cover;
   background-position: center;
@@ -32,10 +34,12 @@ body {
   /* Minimum width for readability on smaller screens */
   max-width: 300px;
   /* Cap width for larger screens */
-  height: 85%;
+  height: auto;
+  /* Let it adjust based on content */
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  padding: 20px;
+  padding: 15px;
+  /* Adjust padding for better spacing */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -45,12 +49,14 @@ body {
   /* Initially positioned off-screen */
   animation: slideIn 1s ease-out forwards;
   /* Slide in animation */
+  z-index: 1;
+  /* Ensure the black box is on top */
 }
 
 /* Title text style in the black box */
 .black-box p {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.4;
 }
 
@@ -58,11 +64,12 @@ body {
 .button-front {
   background-color: #ffffff !important;
   color: black !important;
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 5px;
   font-family: Arial, sans-serif;
   align-self: flex-end;
   /* Aligns button to the bottom-right corner */
+  font-size: 0.9rem;
 }
 
 /* Hover state */
@@ -87,35 +94,57 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .banner {
-    height: 60vh;
-    /* Adjust banner height on smaller screens */
+    min-height: 45vh;
+    /* Further reduce banner height on medium screens */
   }
 
   .black-box {
     width: 50%;
-    /* Expand the black box width for smaller screens */
+    /* Make black box more prominent on small screens */
+    min-width: 250px;
+    /* Slightly reduce width to fit content better */
     height: auto;
     position: relative;
-    /* Remove absolute positioning for smaller screens */
+    /* Remove absolute positioning */
+    left: 0;
   }
 
   .black-box p {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    /* Adjust font size for readability */
   }
 
   .button-front {
-    padding: 8px 16px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 480px) {
   .banner {
-    height: 50vh;
-    /* Further adjust banner height for very small screens */
+    min-height: 35vh;
+    /* Further reduce banner height for very small screens */
   }
 
   .black-box {
     width: 70%;
-    /* Expand the black box width even more */
+    /* Expand black box width for phones */
+    min-width: 200px;
+    /* Keep minimum width for readability */
+    height: auto;
+    left: 0;
+    position: relative;
+    /* Ensure it's positioned properly */
+  }
+
+  .black-box p {
+    font-size: 0.8rem;
+    /* Further reduce font size for mobile */
+  }
+
+  .button-front {
+    padding: 5px 10px;
+    /* Smaller button for compact layout */
+    font-size: 0.75rem;
   }
 }

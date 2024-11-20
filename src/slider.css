@@ -1,6 +1,6 @@
 /* Container for the entire slider */
 body {
-  background-color: rgba(155, 206, 124, 0.238);
+  background-color: white;
 }
 
 .app-slider-container {
@@ -9,7 +9,8 @@ body {
   /* Optional: limits the width */
   margin: 0 auto;
   padding: 20px 0;
-  height: 55em
+  height: auto;
+  /* Adjust to fit content, not a fixed height */
 }
 
 /* Style each slider item */
@@ -17,10 +18,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  /* Make sure content is aligned to the top */
   padding: 10px;
-  height: 100%;
-  /* Ensures all cards have the same height */
+  height: auto;
+  /* Let it adjust based on content */
   box-sizing: border-box;
   text-align: center;
 }
@@ -28,7 +30,8 @@ body {
 /* Card wrapper style */
 .card-1 {
   width: 100%;
-  height: 700px;
+  height: 350px;
+  /* Reduced the height for the card on mobile */
   /* Set a fixed height for the card image */
   display: flex;
   justify-content: center;
@@ -94,16 +97,62 @@ body {
 
 /* For responsiveness */
 @media (max-width: 768px) {
+  .app-slider-container {
+    padding: 10px;
+    /* Reduce padding on smaller screens */
+  }
+
   .card-1 {
-    height: 200px;
-    /* Adjust height for mobile screens */
+    height: 250px;
+    /* Further reduce the height for smaller screens */
   }
 
   .card-text h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    /* Smaller text for better readability */
   }
 
   .card-text p {
     font-size: 0.9rem;
+    /* Smaller text for better readability */
+  }
+
+  .slick-dots {
+    bottom: -20px;
+    /* Adjust position of dots for smaller screens */
+  }
+
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 24px;
+    /* Smaller navigation arrows */
+  }
+}
+
+@media (max-width: 480px) {
+  .app-slider-container {
+    padding: 5px;
+    /* Less padding on very small screens */
+  }
+
+  .card-1 {
+    height: 200px;
+    /* Make cards even shorter on very small screens */
+  }
+
+  .card-text h3 {
+    font-size: 0.9rem;
+    /* Smaller font size for the card heading */
+  }
+
+  .card-text p {
+    font-size: 0.8rem;
+    /* Even smaller font size for descriptions */
+  }
+
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 18px;
+    /* Smaller navigation arrows for phones */
   }
 }

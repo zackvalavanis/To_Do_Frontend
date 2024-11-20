@@ -46,7 +46,7 @@ const AppSlider = () => {
 
     slides.push({
       link: '/Stats',
-      imgSrc: "https://static-00.iconduck.com/assets.00/stats-icon-1024x1005-44rqhmal.png",
+      imgSrc: "https://online.stat.psu.edu/statprogram/sites/statprogram/files/2018-08/statistics-review.jpg",
       title: "My Stats", 
       description: "Your Stats",
     });
