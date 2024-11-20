@@ -22,14 +22,15 @@ export function Login() {
     setErrors([]);
     const params = new FormData(event.target);
     try {
-      const response = await axios.post("http://localhost:3000/sessions.json", params);
+      const API_URL = import.meta.env.VITE_API_URL
+      const response = await axios.post(`${API_URL}/sessions.json`, params);
       const { jwt } = response.data;
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       localStorage.setItem("jwt", jwt);
       event.target.reset();
 
       // Fetch current user data
-      const userResponse = await axios.get("http://localhost:3000/users/current.json");
+      const userResponse = await axios.get(`${API_URL}/users/current.json`);
       setCurrentUser(userResponse.data);
       setIsLoggedIn(true);
       toast.success('User successfully Logged in')

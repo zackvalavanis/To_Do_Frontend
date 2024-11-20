@@ -10,7 +10,8 @@ export function MyActivites() {
   // Fetch activities from the API
   const fetchActivities = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/activities.json');
+      const API_URL = import.meta.env.VITE_API_URL
+      const response = await axios.get(`${API_URL}/activities.json`);
       console.log('Fetched activities:', response.data);
       setActivities(response.data); // Update state with fetched activities
     } catch (error) {

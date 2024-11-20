@@ -173,10 +173,6 @@ const handleCreate=(params, successCallback)=> {
     }
   };
   
-  
-  
-  
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);

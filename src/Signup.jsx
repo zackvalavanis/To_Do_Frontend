@@ -11,9 +11,10 @@ export function Signup() {
   const handleSubmit = (event) => { 
     event.preventDefault();
     setErrors([]);
+    const API_URL = import.meta.env.VITE_API_URL
     const params = new FormData(event.target);
     axios
-      .post("http://localhost:3000/users.json", params)
+      .post(`${API_URL}/users.json`, params)
       .then((response) => { 
         console.log(response.data);
         event.target.reset();

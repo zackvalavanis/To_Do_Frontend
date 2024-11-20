@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       try {
-        const response = await axios.get("http://localhost:3000/users/current.json");
+        const API_URL = import.meta.env.VITE_API_URL
+        const response = await axios.get(`${API_URL}/users/current.json`);
         setCurrentUser(response.data);
         setIsLoggedIn(true);
       } catch (error) {

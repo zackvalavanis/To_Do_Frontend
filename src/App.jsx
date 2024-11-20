@@ -31,7 +31,8 @@ const router = createBrowserRouter([
         element: <Calendar />,
         loader: async () => {
           try {
-            const response = await axios.get('http://localhost:3000/activities.json');
+            const API_URL = import.meta.env.VITE_API_URL
+            const response = await axios.get(`${API_URL}/activities.json`);
             console.log(response.data);
             return response.data;
           } catch (error) {
@@ -55,18 +56,25 @@ const router = createBrowserRouter([
       {
         path: '/Activities/:id',
         element: <ActivityShow />,
-        loader: ({ params }) =>
-          axios.get(`http://localhost:3000/photos/${params.id}.json`).then((response) => {
-            console.log(response.data);
-            return response.data;
-          })
+        loader: async ({ params }) => { 
+          try { 
+            const API_URL = import.meta.env.VITE_API_URL
+            const response = axios.get(`${API_URL}/photos/${params.id}.json`)
+              console.log(response.data);
+              return response.data;
+          } catch(error) { 
+            console.error('Error fetching data', error)
+            return { error: 'Failed to load data'}
+          }
+        }
       }, 
       { 
         path: '/Stats', 
         element: <Stats />, 
         loader: async () => {
           try { 
-             const response = await axios.get(`http://localhost:3000/activities.json`);
+            const API_URL = import.meta.env.VITE_API_URL
+            const response = await axios.get(`${API_URL}/activities.json`);
             console.log(response.data);
             return response.data;
           } catch (error) { 
