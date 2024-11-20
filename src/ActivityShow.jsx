@@ -34,8 +34,9 @@ export function ActivityShow({ eventId, selectedDate, setEvents, events }) {
   // Function to handle activity creation
 const handleCreate=(params, successCallback)=> {
   console.log('handleCreate', params);
+  const API_URL = import.meta.env.VITE_API_URL
 
-  axios.post("http://localhost:3000/activities.json", params).then((response)=> {
+  axios.post(`${API_URL}/activities.json`, params).then((response)=> {
       setEvents((prevEvents) => [
         ...prevEvents,
         {
@@ -54,9 +55,10 @@ const handleCreate=(params, successCallback)=> {
 
   useEffect(() => {
     if (eventId) {
+      const API_URL = import.meta.env.VITE_API_URL
       const fetchSingleActivity = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/activities/${eventId}.json`);
+          const response = await axios.get(`${API_URL}/activities/${eventId}.json`);
           setActivity(response.data);
           setLoading(false);
         } catch (error) {
@@ -146,7 +148,8 @@ const handleCreate=(params, successCallback)=> {
     };
   
     try {
-      const response = await axios.patch(`http://localhost:3000/activities/${id}.json`, processedParams);
+      const API_URL = import.meta.env.VITE_API_URL
+      const response = await axios.patch(`${API_URL}/activities/${id}.json`, processedParams);
       const updatedActivity = response.data;
   
       // Update local activity and state
@@ -201,7 +204,8 @@ const handleCreate=(params, successCallback)=> {
 
   const handleDestroy = (id) => { 
     console.log(handleDestroy, id);
-    axios.delete(`http://localhost:3000/activities/${id}.json`).then(() => { 
+    const API_URL = import.meta.env.VITE_API_URL
+    axios.delete(`${API_URL}/activities/${id}.json`).then(() => { 
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
       toast.success('Deleted Activity')
     })
