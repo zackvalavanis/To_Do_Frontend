@@ -6,7 +6,7 @@ import { AuthContext } from './AuthContext';
 import React, { useContext } from 'react';
 import './Header.css';
 import logo from './assets/Images/calendar-green-icon-png-17.png';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export function Header() {
   const { currentUser, isLoggedIn, logout } = useContext(AuthContext);
@@ -14,7 +14,6 @@ export function Header() {
   useEffect(() => { 
     if (!localStorage.jwt){ 
       console.log('user Logged out');
-      
     }
   }, []);
 
@@ -23,7 +22,7 @@ export function Header() {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link to='/'>
-            <img className="navbar-brand" src={logo}></img>
+            <img className="navbar-brand" src={logo} alt="Logo" />
           </Link>
           <button 
             className="navbar-toggler" 
@@ -39,16 +38,16 @@ export function Header() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">Home</a>
+                <Link className="nav-link active" to="/" aria-current="page">Home</Link>
               </li>
               <li className="nav-item">
                 {localStorage.jwt ? (
-                  <a className="nav-link" href="/Calendar">Calendar</a>
+                  <Link className="nav-link" to="/Calendar">Calendar</Link>
                 ) : null}
               </li>
               <li className="nav-item">
                 {localStorage.jwt ? (
-                  <a className="nav-link" href="/Stats">Stats</a>
+                  <Link className="nav-link" to="/Stats">Stats</Link>
                 ) : null}
               </li>
             </ul>
@@ -64,9 +63,9 @@ export function Header() {
                   Dropdown
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end"> {/* Dropdown aligns to the right */}
-                  <li><a className="dropdown-item" href="/">Home</a></li>
-                  {!localStorage.jwt && <li><a className="dropdown-item" href="/Login">Login</a></li>}
-                  {!localStorage.jwt && <li><a className="dropdown-item" href="/Signup">Signup</a></li>}
+                  <li><Link className="dropdown-item" to="/">Home</Link></li>
+                  {!localStorage.jwt && <li><Link className="dropdown-item" to="/Login">Login</Link></li>}
+                  {!localStorage.jwt && <li><Link className="dropdown-item" to="/Signup">Signup</Link></li>}
                   {localStorage.jwt && <li><Logout className="dropdown-item" /></li>}
                 </ul>
               </li>
